@@ -12,35 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 const tabs = await chrome.tabs.query({
   url: [
     'https://*/*',
     'http://*/*'
   ]
 });
+ 
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator
 const collator = new Intl.Collator();
+;
 tabs.sort((a, b) => collator.compare(a.title, b.title));
 
 const template = document.getElementById('li_template');
 const elements = new Set();
-for (const tab of tabs) {
-  const element = template.content.firstElementChild.cloneNode(true);
 
-  const title = tab.title.split('-')[0].trim();
-  const pathname = new URL(tab.url).pathname.slice('/docs'.length);
-
-  element.querySelector('.title').textContent = title;
-  element.querySelector('.pathname').textContent = pathname;
-  element.querySelector('a').addEventListener('click', async () => {
-    // need to focus window as well as the active tab
-    await chrome.tabs.update(tab.id, { active: true });
-    await chrome.windows.update(tab.windowId, { focused: true });
+chrome.pageCapture.saveAsMHTML({ tabID: tab.id}, async (blob) => {
+  const content = await blob.text();
+  const url = "data:application/x-mimearchive;base64," + btoa(content);
+  chrome.downloads.download({
+    url,
+    filename: 'page.mhtml'
   });
+});
+// for (const tab of tabs) {
+//   const element = template.content.firstElementChild.cloneNode(true);
 
-  elements.add(element);
-}
+//   const title = tab.title.split('-')[0].trim();
+//   const pathname = new URL(tab.url).pathname.slice('/docs'.length);
+
+//   element.querySelector('.title').textContent = title;
+//   element.querySelector('.pathname').textContent = pathname;
+//   element.querySelector('a').addEventListener('click', async () => {
+//     // need to focus window as well as the active tab
+//     await chrome.tabs.update(tab.id, { active: true });
+//     await chrome.windows.update(tab.windowId, { focused: true });
+//   });
+
+//   elements.add(element);
+// }
 document.querySelector('ul').append(...elements);
 
 const button = document.querySelector('button');
