@@ -1,25 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./popup.css" />
-  </head>
-  <body>
-    <template id="check_pass">
-      <h1>This website is all good!</h1>
-      <img src="images/good_check.png">
-    </template>
-    <template id="check_pass">
-      <h1>This website contains links that may be harmful!</h1>
-      <img src="images/good_check.png">
-    </template>
-
-    <h1>Phishing Detection</h1>
-    <button>Group Tabs</button>
-    <ul></ul>
-
-    <script src="./popup.js" type="module"></script>
-  </body>
+<html>
+<head>
+  <title>PhishSec Phishing Detection Tool</title>
+  <script src="popup.js"></script>
+</head>
+<body>
+  <h3 style="width: 150px">PhishSec Phishing Detection Tool</h3>
+  <div id="status">
+    Checking URLs in page...
+  </div>
+  <div id="icon_check">
+    <img src="images/loading.gif" style="width:30px;height:30px">
+  </div>
+</body>
 </html>
