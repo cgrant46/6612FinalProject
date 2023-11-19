@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // Function to check safety
     function checkSafety(urls) {
       // Implement your safety check logic here and return true/false accordingly
-      // Example: Dummy function for checking if URLs contain "unsafe" keyword
+      // Example: Dummy function for checking if URLs contain "unsafe" keyword 
       return true; //dummy function; always returns true for now
     }
   
