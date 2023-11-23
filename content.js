@@ -1,13 +1,18 @@
-let urls = [];
-console.log("MADE IT HERE!");
-const allLinks = document.querySelectorAll('a[href]');
-allLinks.forEach(link => {
-  urls.push(link.href);
-});
-const allLinks2 = document.querySelectorAll('img[src]');
-allLinks2.forEach(link => {
-  urls.push(link.href);
-})
-console.log(urls);
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'parseAndCheckSafety') {
+    let urls = [];
+    const allLinks = document.querySelectorAll('a[href]');
+    allLinks.forEach(link => {
+      urls.push(link.href);
+    });
 
-chrome.runtime.sendMessage(urls);
+    const allImages = document.querySelectorAll('img[src]');
+    allImages.forEach(img => {
+      urls.push(img.src);
+    });
+
+    console.log("URLs parsed.");
+    console.log(urls);
+    chrome.runtime.sendMessage({ urls: urls });
+  }
+});
