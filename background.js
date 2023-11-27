@@ -20,21 +20,27 @@ chrome.runtime.onMessage.addListener( async (message, sender, sendResponse) => {
       .then( ( response ) => {
         score = parseFloat(response);
         console.log(response)
-        if ( score < 0.1 ) {
+        if ( score >= 0.3333 ) {
           console.log("ISSAFE");
+          const displayMessage = 'This webpage is safe.';
+          const iconPath = 'images/safe_icon.png';
+          chrome.runtime.sendMessage({ action: 'updatePopup', message: displayMessage, imageURL: iconPath });
           return true;
         }
         else {
           console.log("ISNOTSAFE");
+          const displayMessage = 'This webpage may contain unsafe URLs.';
+          const iconPath = 'images/unsafe_icon.png';
+          chrome.runtime.sendMessage({ action: 'updatePopup', message: displayMessage, imageURL: iconPath });
           return false;
         }
       } )
     }
     console.log('Service worker got message to check safety of urls.');
     const isSafe = await checkSafety(message.urls);
-    const displayMessage = isSafe ? 'This webpage is safe.' : 'This webpage may contain unsafe URLs.';
+    /* const displayMessage = isSafe ? 'This webpage is safe.' : 'This webpage may contain unsafe URLs.';
     const iconPath = isSafe ? 'images/safe_icon.png' : 'images/unsafe_icon.png';
 
-    chrome.runtime.sendMessage({ action: 'updatePopup', message: displayMessage, imageURL: iconPath });
+    chrome.runtime.sendMessage({ action: 'updatePopup', message: displayMessage, imageURL: iconPath }); */
   }
 });
