@@ -17,6 +17,8 @@ def get_phishing_score():
                         'Domain_Age', 'Domain_End', 'iFrame', 'Mouse_Over','Right_Click', 'Web_Forwards']
     features = pd.DataFrame(features, columns=feature_names)
     prediction = np.average( clf.predict( features ) )
+    print(features)
+    print(prediction)
     return str( prediction )
 
 if __name__ == '__main__':
