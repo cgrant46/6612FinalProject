@@ -1,5 +1,7 @@
+import pickle
 from flask import Flask, request
 
+clf = pickle.load(open("phishing_detection_url/XGBoostClassifier.pickle.dat", "rb"))
 app = Flask(__name__)
 
 @app.route("/")
