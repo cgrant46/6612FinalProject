@@ -12,7 +12,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
 
     console.log("URLs parsed.");
-    console.log(urls);
     chrome.runtime.sendMessage({ urls: urls });
   }
 });
