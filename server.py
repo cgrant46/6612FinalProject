@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route("/")
 def get_phishing_score():
     package = ""
-    for url in request.args.items():
+    for _, url in request.args.items():
         package += url + '\n'
     return package
 
